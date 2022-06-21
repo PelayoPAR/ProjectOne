@@ -5,11 +5,11 @@ class Background {
 
   preload() {
     // this.img = loadImage("")
+    this.img = loadImage("/images/darkFarmInDaPinos.jpg");
   }
 
   drawBackground() {
-    background("blue");
-    // createCanvas(500, 750);
+    image(this.img, this.left, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
     // image(this.img, this.left, 0, CANVAS_WIDTH, CANVAS_HEIGHT)
   }
 }
