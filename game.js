@@ -16,6 +16,7 @@ class Game {
     this.background.preload();
     this.ufo.preload();
     cowImg = loadImage("images/cow_002.svg");
+    //ufoImg = loadImage("images/")
   }
 
   play() {
@@ -24,6 +25,7 @@ class Game {
     this.ufo.drawUfo();
     this.cowHerd.forEach((cow) => {
       cow.drawCow();
+      // ufo.drawUfo();
     });
   }
 

@@ -7,3 +7,4 @@ const ENTER_KEY = 13;
 const CANVAS_HEIGHT = 900;
 const CANVAS_WIDTH = 1800;
 let cowImg;
+let ufoImg;

@@ -9,7 +9,7 @@ class Cow {
 
   moveCow() {
     const multiplier = this.initialDirection === "left" ? -1 : 1;
-    this.left += 3 * multiplier;
+    this.left += 1 * multiplier;
     if (this.left < 5 && this.initialDirection === "left") {
       this.initialDirection = "right";
     } else if (
