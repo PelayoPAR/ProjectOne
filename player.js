@@ -1,50 +1,46 @@
 class Player {
   constructor() {
-    this.top = 0;
     this.left = CANVAS_WIDTH / 2 - 25;
+    this.top = CANVAS_HEIGHT;
     this.width = 50;
     this.height = 50;
     this.bulletArray = [];
   }
 
   preload() {
-    this.img = loadImage("./images/farmer.jpg");
+    this.img = loadImage("images/farmer.jpg");
+    this.bulletImg = loadImage("images/bullet.svg");
   }
 
-  //trying to shoot:
   keyIsDown() {
     if (keyCode === SPACE_BAR) {
       console.log("bang");
-      this.bulletBurst;
+      this.bulletBurst();
     }
   }
 
   bulletBurst() {
     const gunLocation = this.farmerGunLocation();
-    this.bulletArray.push(new Bullet(gunLocation.top, gunLocation.left));
+    this.bulletArray.push(
+      new Bullet(gunLocation.left, gunLocation.top, this.bulletImg)
+    );
   }
 
   farmerGunLocation() {
+    const gunX = this.width / 2;
+    const gunY = -this.height;
     return {
-      top: this.top,
-      left: this.left,
+      left: this.left + gunX,
+      top: this.top + gunY,
     };
   }
 
-  lostBullets() {
-    this.bulletArray = this.bulletArray.filter(
-      (bullet) => bullet.top <= CANVAS_HEIGHT
-    );
+  strayBullets() {
+    this.bulletArray = this.bulletArray.filter((bullet) => bullet.top >= 0);
   }
 
   drawPlayer() {
-    image(
-      this.img,
-      this.left,
-      CANVAS_HEIGHT - this.height,
-      this.width,
-      this.height
-    );
+    image(this.img, this.left, this.top - this.height, this.width, this.height);
 
     // movement L-R implemented here for smooth movement:
     if (keyIsDown(ARROW_LEFT)) {
@@ -62,6 +58,6 @@ class Player {
       bullet.shootBullets();
     });
 
-    this.lostBullets();
+    this.strayBullets();
   }
 }

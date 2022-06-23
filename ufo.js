@@ -8,7 +8,7 @@ class Ufo {
   }
 
   preload() {
-    this.img = loadImage("/images/initialUFO.jpg");
+    this.img = loadImage("images/initialUFO.jpg");
   }
 
   ufoHorMove = () => {
@@ -37,21 +37,5 @@ class Ufo {
     } else if (this.top >= CANVAS_HEIGHT / 2.5 + this.height) {
       this.ufoHorMove();
     }
-
-    // let UFOmove = () =>
-
-    // changeDirection example: https://editor.p5js.org/cmorgantywls/sketches/HkdbRQnOG
-    // this.left = this.left
-    // // changeDirection = false;
-
-    // if (this.top < CANVAS_HEIGHT / 2 + this.height) {
-    //   this.top += 5;
-    // } else if ((this.top = CANVAS_HEIGHT / 2 + this.height)) {
-    //   if (this.left > 5) {
-    //     this.left -= 3;
-    //   } else if (this.left < CANVAS_WIDTH - this.width) {
-    //     this.left += 3;
-    //   }
-    // }
   }
 }

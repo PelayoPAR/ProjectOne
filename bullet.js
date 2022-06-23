@@ -1,12 +1,13 @@
 class Bullet {
-  constructor(top, left) {
-    this.top = top;
+  constructor(left, top, bulletImg) {
     this.left = left;
+    this.top = top;
+    this.img = bulletImg;
   }
 
   shootBullets() {
     textSize(10);
-    text("O", this.left, this.top);
-    this.top -= 1;
+    image(this.img, this.left, this.top, 10, 10);
+    this.top -= 7;
   }
 }
