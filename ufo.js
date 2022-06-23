@@ -3,12 +3,13 @@ class Ufo {
     this.top = 0;
     this.left = CANVAS_WIDTH / 2 - 50;
     this.width = 100;
-    this.height = 50;
+    this.height = 100;
     this.initialDirection = "left";
+    //this.isColliding = "false"
   }
 
   preload() {
-    this.img = loadImage("images/initialUFO.jpg");
+    this.img = loadImage("images/separateUFO2ndModel.svg");
   }
 
   ufoHorMove = () => {
@@ -37,5 +38,9 @@ class Ufo {
     } else if (this.top >= CANVAS_HEIGHT / 2.5 + this.height) {
       this.ufoHorMove();
     }
+  }
+  
+  ufoExplode(/*iscolliding = true/false*/) {
+    
   }
 }
