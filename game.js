@@ -1,11 +1,18 @@
 class Game {
-  constructor(numberOfCows) {
+  constructor(numberOfCows, numberOfUFOs) {
     this.player = new Player();
     this.background = new Background();
-    this.ufo = new Ufo();
-    //this.ufoHerd = []
-    // this.cow = new Cow();
+    // this.ufo = new Ufo(); <- for single UFO object
+
+    this.ufoHerd = [];
+    // takes numberofUFOs from game constructor -- pending framecount dependancy to appear in some order.
+    for (let i = 0; i <= numberOfUFOs; i++) {
+      const randomX = Math.floor(Math.random() * 1750 + 50);
+      this.ufoHerd.push(new Ufo(randomX, 0 - 100));
+    }
+    // this.cow = new Cow(); <- for single cow object
     this.cowHerd = [];
+    // takes numberofCows from game constructor and makes them all appear at once.
     for (let i = 0; i <= numberOfCows; i++) {
       const randomX = Math.floor(Math.random() * 1750 + 50);
       this.cowHerd.push(new Cow(randomX, CANVAS_HEIGHT - 100));
@@ -13,27 +20,36 @@ class Game {
   }
 
   preload() {
-    this.player.preload();
+    // pending changing load order so that player goes in top of the cows
+    playerImg = this.player.preload();
     this.background.preload();
-    this.ufo.preload();
+    // this.ufo.preload();
     cowImg = loadImage("images/cow_002.svg");
-    //ufoImg = loadImage("images/")
+    ufoImg = loadImage("images/separateUFO2ndModel.svg");
   }
 
   play() {
     this.background.drawBackground();
     this.player.drawPlayer();
-    this.ufo.drawUfo();
+    // this.ufo.drawUfo(); <- for single UFO object
+    this.ufoHerd.forEach((ufo) => {
+      ufo.drawUfo();
+    });
+
     this.cowHerd.forEach((cow) => {
       cow.drawCow();
     });
 
     this.player.bulletArray.forEach((bullet) => {
-      if (this.isColliding(bullet, this.ufo)) {
-        // this.ufo = new Explosion();
-        console.log("crack, zas, pow!");
-        // this.player.score++;
-      }
+      this.ufoHerd.forEach((ufo) => {
+        if (this.isColliding(bullet, ufo)) {
+          // this.player.bulletArray.slice(bullet)
+          // this.ufoHerd.slice(ufo)
+          // this.ufo = new Explosion();
+          console.log("crack, zas, pow!");
+          // this.player.score++;
+        }
+      });
     });
   }
 

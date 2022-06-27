@@ -6,5 +6,6 @@ const SPACE_BAR = 32;
 const ENTER_KEY = 13;
 const CANVAS_HEIGHT = 900;
 const CANVAS_WIDTH = 1800;
+let playerImg;
 let cowImg;
 let ufoImg;

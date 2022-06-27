@@ -1,9 +1,9 @@
 class Ufo {
-  constructor() {
-    this.top = 0;
-    this.left = CANVAS_WIDTH / 2 - 50;
-    this.width = 100;
-    this.height = 100;
+  constructor(left, top) {
+    this.top = top;
+    this.left = left;
+    this.width = 200;
+    this.height = 150;
     this.initialDirection = "left";
     //this.isColliding = "false"
   }
@@ -26,21 +26,24 @@ class Ufo {
   };
 
   drawUfo() {
-    image(this.img, this.left, this.top, this.width, this.height);
+    image(ufoImg, this.left, this.top, this.width, this.height);
 
-    // var countdownStart = random(60, 720);
-    // setInterval??
-
-    //let UfoHorInterval = setInterval(ufoHorMove(),1500)
-
-    if (this.top < CANVAS_HEIGHT / 2.5 + this.height) {
+    if (this.top < CANVAS_HEIGHT / 3) {
       this.top += 5;
-    } else if (this.top >= CANVAS_HEIGHT / 2.5 + this.height) {
+    } else if (this.top >= CANVAS_HEIGHT / 3) {
       this.ufoHorMove();
     }
   }
-  
-  ufoExplode(/*iscolliding = true/false*/) {
-    
+  // ufoExplode(/*iscolliding = true/false*/) {}
+
+  Abductio() /* perhaps introduce unluckyCow and abductingUFO as parameters?? */ {
+    //choose abductingUFO and unluckyCow from respective arrays
+    let unluckyCow =
+      game.cowHerd[Math.floor(Math.random() * game.cowHerd.length)]; // not sure if cowHerd will work like this or just cowHerd
+
+    let abductingUFO =
+      game.ufoHerd[Math.floor(Math.random() * game.ufoHerd.length)];
+
+    // AbductingUFO must move towards unluckyCow and beam it up (easier said than done innit?)
   }
 }

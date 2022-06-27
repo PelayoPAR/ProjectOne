@@ -2,19 +2,19 @@ class Player {
   constructor() {
     this.left = CANVAS_WIDTH / 2 - 25;
     this.top = CANVAS_HEIGHT;
-    this.width = 50;
-    this.height = 50;
+    this.width = 100;
+    this.height = 100;
     this.bulletArray = [];
   }
 
   preload() {
-    this.img = loadImage("images/farmer.jpg");
+    this.img = loadImage("images/farmerWeaponized.svg");
     this.bulletImg = loadImage("images/bullet.svg");
   }
 
   keyIsDown() {
     if (keyCode === SPACE_BAR) {
-      console.log("bang");
+      // console.log("bang");
       this.bulletBurst();
     }
   }
@@ -59,5 +59,9 @@ class Player {
     });
 
     this.strayBullets();
+
+    // if (frameCount % 50 === 0) {
+    // text("You goshdarn aliens!!!", this.left + this.width + 10, this.top - 10);
+    // }
   }
 }
