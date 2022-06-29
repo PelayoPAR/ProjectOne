@@ -7,6 +7,7 @@ class Ufo {
     this.height = 75;
     this.initialDirection = "left";
     this.hasCollided = false;
+    this.boomTime = 90; //<- in frames
   }
 
   preload() {
@@ -14,21 +15,32 @@ class Ufo {
   }
 
   ufoHorMove = () => {
+    // ternary to define left or right
     const multiplier = this.initialDirection === "left" ? -1 : 1;
+    // define UFO horizontal speed here:
     this.left += 3 * multiplier;
-    if (this.left < 5 && this.initialDirection === "left") {
-      this.initialDirection = "right";
-    } else if (
-      this.left > CANVAS_WIDTH - this.width &&
-      this.initialDirection === "right"
-    ) {
-      this.initialDirection = "left";
+    // for explosions to leave canvas instead of bouncing on the edge:
+    if (!this.hasCollided) {
+      // here is the change of direction:
+      if (this.left < 5 && this.initialDirection === "left") {
+        this.initialDirection = "right";
+      } else if (
+        this.left > CANVAS_WIDTH - this.width &&
+        this.initialDirection === "right"
+      ) {
+        this.initialDirection = "left";
+      }
     }
   };
 
   drawUfo() {
     //rect(this.left, this.top, this.width, this.height);
-    image(ufoImg, this.left, this.top, this.width, this.height);
+    if (this.hasCollided) {
+      image(gifLoadUFOXplosion, this.left, this.top, this.width, this.height);
+      this.boomTime--;
+    } else {
+      image(ufoImg, this.left, this.top, this.width, this.height);
+    }
 
     if (this.top < CANVAS_HEIGHT / 3) {
       this.top += 5;
@@ -36,14 +48,7 @@ class Ufo {
       this.ufoHorMove();
     }
   }
-  // ufoExplode(/*iscolliding = true/false*/) {}
-  explodeUFO() {
-    image(gifLoadUFOXplosion, this, left, this.top, this.width, this.height);
-    gifCreateUFOXplosion.position(this.left, this.top);
-  }
-
   hit() {
-    // console.log("piaupiaupiau")
     this.hasCollided = true;
   }
 

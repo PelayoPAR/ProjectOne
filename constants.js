@@ -9,3 +9,5 @@ const CANVAS_WIDTH = 1800;
 let playerImg;
 let cowImg;
 let ufoImg;
+let gifLoadUFOXplosion;
+let gifCreateUFOXplosion;

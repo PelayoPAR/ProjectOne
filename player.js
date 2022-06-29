@@ -70,9 +70,15 @@ class Player {
     });
 
     this.strayBullets();
+  }
 
-    // if (frameCount % 50 === 0) {
-    // text("You goshdarn aliens!!!", this.left + this.width + 10, this.top - 10);
-    // }
+  commentOutLoud() {
+    text(
+      "You goshdarn aliens!!!",
+      this.left + this.width,
+      this.top - 10,
+      300,
+      200
+    );
   }
 }
