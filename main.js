@@ -3,7 +3,7 @@
 // the general idea is that you should be able to almost copy paste the main file between your projects and the projects should behave the same
 
 // we instantiate the game in this main file because is the only thing it should know that it exists. and then from that point every responsability gets moved to the game class
-const game = new Game(10, 10);
+const game = new Game(10, 10); // calling numberOfCows and numberOfUFOs as arguiments allows for flexibility and perhaps different game levels customization.
 
 function setup() {
   createCanvas(CANVAS_WIDTH, CANVAS_HEIGHT);

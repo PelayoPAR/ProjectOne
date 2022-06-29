@@ -5,6 +5,8 @@ class Player {
     this.width = 100;
     this.height = 100;
     this.bulletArray = [];
+    this.bulletCount = 0;
+    // this.score = 0 /* pending score to be UFOs destroyed * cowsSaved(cowHerd.length) also show score somewhere... */
   }
 
   preload() {
@@ -21,9 +23,18 @@ class Player {
 
   bulletBurst() {
     const gunLocation = this.farmerGunLocation();
-    this.bulletArray.push(
-      new Bullet(gunLocation.left, gunLocation.top, this.bulletImg)
-    );
+    // limit ROF to 3:
+    if (this.bulletArray.length < 3) {
+      this.bulletArray.push(
+        new Bullet(
+          gunLocation.left,
+          gunLocation.top,
+          this.bulletImg,
+          this.bulletCount
+        )
+      );
+      this.bulletCount++;
+    }
   }
 
   farmerGunLocation() {

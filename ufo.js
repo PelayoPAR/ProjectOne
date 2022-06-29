@@ -1,11 +1,12 @@
 class Ufo {
-  constructor(left, top) {
+  constructor(left, top, id) {
+    this.id = id;
     this.top = top;
     this.left = left;
-    this.width = 200;
-    this.height = 150;
+    this.width = 150;
+    this.height = 75;
     this.initialDirection = "left";
-    //this.isColliding = "false"
+    this.hasCollided = false;
   }
 
   preload() {
@@ -26,6 +27,7 @@ class Ufo {
   };
 
   drawUfo() {
+    //rect(this.left, this.top, this.width, this.height);
     image(ufoImg, this.left, this.top, this.width, this.height);
 
     if (this.top < CANVAS_HEIGHT / 3) {
@@ -35,6 +37,15 @@ class Ufo {
     }
   }
   // ufoExplode(/*iscolliding = true/false*/) {}
+  explodeUFO() {
+    image(gifLoadUFOXplosion, this, left, this.top, this.width, this.height);
+    gifCreateUFOXplosion.position(this.left, this.top);
+  }
+
+  hit() {
+    // console.log("piaupiaupiau")
+    this.hasCollided = true;
+  }
 
   Abductio() /* perhaps introduce unluckyCow and abductingUFO as parameters?? */ {
     //choose abductingUFO and unluckyCow from respective arrays
@@ -44,6 +55,9 @@ class Ufo {
     let abductingUFO =
       game.ufoHerd[Math.floor(Math.random() * game.ufoHerd.length)];
 
-    // AbductingUFO must move towards unluckyCow and beam it up (easier said than done innit?)
+    // AbductingUFO  - must move towards unluckyCow and? - beam it up (easier said than done innit?)
+    // first, make cow and UFO stop
+
+    //then make cow move up towards UFO
   }
 }

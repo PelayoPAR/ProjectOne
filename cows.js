@@ -1,5 +1,6 @@
 class Cow {
-  constructor(left, top) {
+  constructor(left, top, id) {
+    this.id = id;
     this.left = left;
     this.top = top;
     this.height = 50;
