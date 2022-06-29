@@ -1,6 +1,5 @@
 class Game {
   constructor(numberOfCows, numberOfUFOs) {
-    this.player = new Player();
     this.background = new Background();
     this.numberOfUFOs = numberOfUFOs;
     // this.ufo = new Ufo(); <- for single UFO object
@@ -20,6 +19,7 @@ class Game {
       const randomX = Math.floor(Math.random() * 1750 + 50);
       this.cowHerd.push(new Cow(randomX, CANVAS_HEIGHT - 100, i));
     }
+    this.player = new Player();
   }
 
   preload() {
@@ -34,7 +34,7 @@ class Game {
 
   play() {
     this.background.drawBackground();
-    this.player.drawPlayer();
+
     // this.ufo.drawUfo(); <- for single UFO object
     this.ufoHerd.forEach((ufo) => {
       ufo.drawUfo();
@@ -42,6 +42,7 @@ class Game {
     this.cowHerd.forEach((cow) => {
       cow.drawCow();
     });
+    this.player.drawPlayer();
 
     // in order for UFOs to appear one by one each second:
     if (frameCount % 60 === 0 && this.ufoHerd.length < this.numberOfUFOs) {
@@ -81,9 +82,6 @@ class Game {
     });
 
     // try to make the farmer say funny/dumb stuff:
-    if (frameCount % 50 === 0) {
-      this.player.commentOutLoud();
-    }
   }
 
   //   keyPressed() {

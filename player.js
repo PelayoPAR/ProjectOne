@@ -70,15 +70,19 @@ class Player {
     });
 
     this.strayBullets();
+
+    this.commentOutLoud();
   }
 
   commentOutLoud() {
     text(
       "You goshdarn aliens!!!",
       this.left + this.width,
-      this.top - 10,
+      this.top - this.height - 80,
       300,
       200
     );
+    textSize(30);
+    fill("white");
   }
 }
