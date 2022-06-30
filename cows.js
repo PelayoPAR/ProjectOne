@@ -10,13 +10,14 @@ class Cow {
     this.direction = "left";
     this.moonWalk = moonWalk; // Having all cows moving forward normally made me a bit less happy xD
     this.abducted = false;
+    this.speed = 1;
   }
 
   moveCow() {
     // as with UFOs make them change direction when they reach canvas limits:
     const multiplier = this.direction === "left" ? -1 : 1;
     if (!this.abducted) {
-      this.left += 1 * multiplier;
+      this.left += this.speed * multiplier;
     }
     if (this.left < 5 && this.direction === "left") {
       this.direction = "right";

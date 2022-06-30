@@ -10,6 +10,7 @@ class Ufo {
     this.boomTime = 90; //<- in frames
     this.abducting = false;
     this.target = undefined;
+    this.speed = 3;
   }
 
   preload() {
@@ -21,7 +22,7 @@ class Ufo {
     // ternary to define if left or right
     const multiplier = this.direction === "left" ? -1 : 1;
     // define UFO horizontal speed here:
-    this.left += 3 * multiplier;
+    this.left += this.speed * multiplier;
     // for explosions to leave canvas instead of bouncing on the edge:
     if (!this.hasCollided) {
       // here is the change of direction: if reaching edge of canvas and going on a direction, change direction
@@ -52,7 +53,7 @@ class Ufo {
       this.ufoHorMove();
     }
     if (this.abducting) {
-      // this.abductio();
+      this.abductio();
     }
   }
   // method to acknowledge being hit by bullet:
@@ -62,13 +63,15 @@ class Ufo {
 
   abductio() /* perhaps introduce unluckyCow(this.target) and abductingUFO as parameters?? */ {
     //choose abductingUFO and unluckyCow(this.target) from respective arrays
-
+    // console.log("all your cows are belong to us");
+    console.log(this.left);
+    console.log(this.target.left);
     //then make UFO move horizontally towards cow:
-    if (this.left > this.target.left) {
+    if (this.left > this.target.left + 5) {
       console.log("goLeft");
       this.direction = "left";
       this.ufoHorMove();
-    } else if (this.left < this.target.left) {
+    } else if (this.left < this.target.left - 5) {
       console.log("goRight");
       this.direction = "right";
       this.ufoHorMove();

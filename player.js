@@ -8,6 +8,7 @@ class Player {
     this.bulletCount = 0;
     this.score = 0; // after counting killed UFOs * 100 points, multiply by cowsSaved(cowHerd.length). PENDING: show score somewhere... */
     this.commentDurationCount = 180; // <- fps
+    this.speed = 4;
   }
 
   preload() {
@@ -56,12 +57,12 @@ class Player {
     // movement L-R implemented here for smooth movement:
     if (keyIsDown(ARROW_LEFT)) {
       if (this.left > 0) {
-        this.left -= 4;
+        this.left -= this.speed;
       }
     }
     if (keyIsDown(ARROW_RIGHT)) {
       if (this.left < CANVAS_WIDTH - this.width) {
-        this.left += 4;
+        this.left += this.speed;
       }
     }
 

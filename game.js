@@ -154,12 +154,12 @@ class Game {
   }
   abductioEvent() {
     const cowsNotAbducted = this.cowHerd.filter((cow) => !cow.abducted);
-    if (!cowsNotAbducted) return;
+    if (!cowsNotAbducted.length) return;
     const unluckyCow =
       cowsNotAbducted[Math.floor(Math.random() * cowsNotAbducted.length)]; // filter in order to avoid choosing same cow twice
 
     const ufosNotAbducting = this.ufoHerd.filter((ufo) => !ufo.abducting);
-    if (!ufosNotAbducting) return;
+    if (!ufosNotAbducting.length) return;
     const abductingUFO =
       ufosNotAbducting[Math.floor(Math.random() * ufosNotAbducting.length)];
 
@@ -170,6 +170,6 @@ class Game {
     unluckyCow.abducted = true;
 
     // provide target for UFO:
-    abductingUFO.target = unluckyCow.id;
+    abductingUFO.target = unluckyCow; // passing cow by reference, if I change it wherever it'll change everywhere
   }
 }
