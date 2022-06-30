@@ -5,30 +5,33 @@ class Ufo {
     this.left = left;
     this.width = 150;
     this.height = 75;
-    this.initialDirection = "left";
-    this.hasCollided = false;
+    this.direction = "left";
+    this.hasCollided = false; //<- has it collided with a bullet? Y/N
     this.boomTime = 90; //<- in frames
+    this.abducting = false;
+    this.target = undefined;
   }
 
   preload() {
-    this.img = loadImage("images/separateUFO2ndModel.svg");
+    // this.img = loadImage("images/separateUFO2ndModel.svg");
+    // this.img = loadImage("images/ufoGIF.gif");
   }
 
   ufoHorMove = () => {
-    // ternary to define left or right
-    const multiplier = this.initialDirection === "left" ? -1 : 1;
+    // ternary to define if left or right
+    const multiplier = this.direction === "left" ? -1 : 1;
     // define UFO horizontal speed here:
     this.left += 3 * multiplier;
     // for explosions to leave canvas instead of bouncing on the edge:
     if (!this.hasCollided) {
-      // here is the change of direction:
-      if (this.left < 5 && this.initialDirection === "left") {
-        this.initialDirection = "right";
+      // here is the change of direction: if reaching edge of canvas and going on a direction, change direction
+      if (this.left < 5 && this.direction === "left") {
+        this.direction = "right";
       } else if (
         this.left > CANVAS_WIDTH - this.width &&
-        this.initialDirection === "right"
+        this.direction === "right"
       ) {
-        this.initialDirection = "left";
+        this.direction = "left";
       }
     }
   };
@@ -45,8 +48,11 @@ class Ufo {
     // UFO drops until certain height then starts horizontal movement:
     if (this.top < CANVAS_HEIGHT / 3) {
       this.top += 5;
-    } else if (this.top >= CANVAS_HEIGHT / 3) {
+    } else if (this.top >= CANVAS_HEIGHT / 3 && !this.abducting) {
       this.ufoHorMove();
+    }
+    if (this.abducting) {
+      // this.abductio();
     }
   }
   // method to acknowledge being hit by bullet:
@@ -54,17 +60,23 @@ class Ufo {
     this.hasCollided = true;
   }
 
-  Abductio() /* perhaps introduce unluckyCow and abductingUFO as parameters?? */ {
-    //choose abductingUFO and unluckyCow from respective arrays
-    let unluckyCow =
-      game.cowHerd[Math.floor(Math.random() * game.cowHerd.length)]; // not sure if cowHerd will work like this or just cowHerd
+  abductio() /* perhaps introduce unluckyCow(this.target) and abductingUFO as parameters?? */ {
+    //choose abductingUFO and unluckyCow(this.target) from respective arrays
 
-    let abductingUFO =
-      game.ufoHerd[Math.floor(Math.random() * game.ufoHerd.length)];
-
-    // AbductingUFO  - must move towards unluckyCow and? - beam it up (easier said than done innit?)
-    // first, make cow and UFO stop
+    //then make UFO move horizontally towards cow:
+    if (this.left > this.target.left) {
+      console.log("goLeft");
+      this.direction = "left";
+      this.ufoHorMove();
+    } else if (this.left < this.target.left) {
+      console.log("goRight");
+      this.direction = "right";
+      this.ufoHorMove();
+    }
 
     //then make cow move up towards UFO
+    if (this.target.top < this.top + this.height) {
+      this.target.top -= this.target.top;
+    }
   }
 }

@@ -7,9 +7,9 @@ class Game {
     this.cowHerd = [];
     // takes numberofCows from game constructor and makes them all appear at once.
     for (let i = 0; i < numberOfCows; i++) {
-      const moonWalkDice = Math.floor(Math.random() * 2) >= 1;
+      const moonWalkDice = Math.floor(Math.random() * 2) >= 1; // <- the >= 1 turns it into boolean for easier management.
       const randomX = Math.floor(Math.random() * 1750 + 50);
-      this.cowHerd.push(new Cow(randomX, CANVAS_HEIGHT - 100, i, moonWalkDice));
+      this.cowHerd.push(new Cow(randomX, cowFloor, i, moonWalkDice));
     }
 
     // this.ufo = new Ufo(); <- for single UFO object
@@ -31,11 +31,12 @@ class Game {
     // pending changing load order so that player goes in top of the cows
     playerImg = this.player.preload();
     this.background.preload();
-    // this.ufo.preload(); <- fir single UFO object
+    // this.ufo.preload(); <- for single UFO object
     cowImg = loadImage("images/cow_002.svg");
     cowImgFlipped = loadImage("images/cow_002Flipped.svg");
-    ufoImg = loadImage("images/separateUFO2ndModel.svg");
+    ufoImg = loadImage("images/separateUFO2ndModel.svg"); // <- svg UFO image
     gifLoadUFOXplosion = loadImage("images/explosionCool.gif");
+    // gifLoadUFO = loadImage("images/ufoMitPassengerGIF.gif"); //<- gif UFO image
   }
 
   play() {
@@ -49,12 +50,13 @@ class Game {
     this.cowHerd.forEach((cow) => {
       cow.drawCow();
     });
+    // drawing player after cows draws player in front of cows (z index)
     this.player.drawPlayer();
 
     // in order for UFOs to appear one by one each second:
     if (frameCount % 60 === 0 && this.ufoHerd.length < this.numberOfUFOs) {
       const randomX = Math.floor(Math.random() * (CANVAS_WIDTH - 150));
-      this.ufoHerd.push(new Ufo(randomX, 0 - 100));
+      this.ufoHerd.push(new Ufo(randomX, 0 - 100, frameCount / 60));
       this.UFOcounter++; // <- in order to keep track of score
     }
 
@@ -62,6 +64,8 @@ class Game {
     this.player.bulletArray.forEach((bullet) => {
       this.ufoHerd.forEach((ufo) => {
         if (this.isColliding(bullet, ufo)) {
+          // we need to remove bullet and make ufo pass to exploding state but, all while allowing UFOs that are "behind" to be hittable by other bullets
+          // that is, avoid that the explosion absorb bullets:
           if (!bullet.hasCollided) {
             // this.numberOfUFOs--; <- in case we want a simple 10 UFOs start 10 UFOs are destroyed.
             // but, lets spice it up with an UFO reinforcement rate with some randomness.
@@ -70,8 +74,11 @@ class Game {
               this.numberOfUFOs--;
               console.log(this.numberOfUFOs);
             }
+            // important! ufo.hit() must be run here below to avoid hit duplication
             ufo.hit();
           }
+          //important! ufo.boomTime is initially set to 90 frames countdown,
+          // it's important that it is accounted for 1 frame after in order to avoid hit duplication
           if (ufo.boomTime >= 89) {
             bullet.hit();
           }
@@ -144,5 +151,25 @@ class Game {
       isLeftOfASmallerThanRightOfB &&
       isRightOfABiggerThanLeftOfB
     );
+  }
+  abductioEvent() {
+    const cowsNotAbducted = this.cowHerd.filter((cow) => !cow.abducted);
+    if (!cowsNotAbducted) return;
+    const unluckyCow =
+      cowsNotAbducted[Math.floor(Math.random() * cowsNotAbducted.length)]; // filter in order to avoid choosing same cow twice
+
+    const ufosNotAbducting = this.ufoHerd.filter((ufo) => !ufo.abducting);
+    if (!ufosNotAbducting) return;
+    const abductingUFO =
+      ufosNotAbducting[Math.floor(Math.random() * ufosNotAbducting.length)];
+
+    // AbductingUFO  - must move towards unluckyCow and? - beam it up (easier said than done innit?)
+    console.log(abductingUFO);
+    // first, make cow and UFO stop
+    abductingUFO.abducting = true;
+    unluckyCow.abducted = true;
+
+    // provide target for UFO:
+    abductingUFO.target = unluckyCow.id;
   }
 }

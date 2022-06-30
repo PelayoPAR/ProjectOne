@@ -6,7 +6,7 @@ class Player {
     this.height = 100;
     this.bulletArray = [];
     this.bulletCount = 0;
-    this.score = 0; /* pending score to be UFOs destroyed * cowsSaved(cowHerd.length) also show score somewhere... */
+    this.score = 0; // after counting killed UFOs * 100 points, multiply by cowsSaved(cowHerd.length). PENDING: show score somewhere... */
     this.commentDurationCount = 180; // <- fps
   }
 
@@ -23,7 +23,7 @@ class Player {
 
   bulletBurst() {
     const gunLocation = this.farmerGunLocation();
-    // limit ROF to 3:
+    // limit ROF to 3 bullets on screen:
     if (this.bulletArray.length < 3) {
       this.bulletArray.push(
         new Bullet(
@@ -71,7 +71,7 @@ class Player {
 
     this.strayBullets();
 
-    // if chatTime > 0 - meter contador
+    // if chatTime > 0 - introduce counter
     // if count % array.length === 0 - esto hace que elija un elemento del array de forma ciclica
     this.commentOutLoud();
   }
@@ -91,7 +91,8 @@ class Player {
     /*Otras frases:
     I'll show you intergalactic rustlers what's what!
     They took our jobs! And our cows! 
-    We'll build a wall to keep you out! 
-    I'm protected by God and the 2nd ammendment! */
+    We'll build a wall to keep y'all out! 
+    I'm protected by God and the 2nd ammendment!
+    Get off mah propertah! */
   }
 }
