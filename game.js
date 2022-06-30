@@ -55,7 +55,7 @@ class Game {
     if (frameCount % 60 === 0 && this.ufoHerd.length < this.numberOfUFOs) {
       const randomX = Math.floor(Math.random() * (CANVAS_WIDTH - 150));
       this.ufoHerd.push(new Ufo(randomX, 0 - 100));
-      this.UFOcounter++;
+      this.UFOcounter++; // <- in order to keep track of score
     }
 
     // to detect collision between UFOs and bullets:
@@ -64,7 +64,7 @@ class Game {
         if (this.isColliding(bullet, ufo)) {
           if (!bullet.hasCollided) {
             // this.numberOfUFOs--; <- in case we want a simple 10 UFOs start 10 UFOs are destroyed.
-            // lets spice it up with an UFO reinforcement rate with some randomness.
+            // but, lets spice it up with an UFO reinforcement rate with some randomness.
             const dice = Math.floor(Math.random() * 10);
             if (!ufo.hasCollided && dice >= 4) {
               this.numberOfUFOs--;
@@ -83,19 +83,18 @@ class Game {
     this.player.bulletArray = this.player.bulletArray.filter((bullet) => {
       return !bullet.hasCollided;
     });
-    // after scanning for exploded UFOs, remove them from ufoHerd array
-    const currentUFOs = this.ufoHerd.length;
+    // after scanning for exploded UFOs, remove them from ufoHerd array and keep track of score
+    const currentUFOs = this.ufoHerd.length; // <- this number will have killedUFOs substracted to keep track of score
 
+    // return only unscathed UFOs
     const survivingUFOs = this.ufoHerd.filter((ufo) => {
       return ufo.boomTime > 0;
     });
     this.ufoHerd = survivingUFOs;
-    const killedUFOs = currentUFOs - survivingUFOs.length; // IS THIS A NUMBER EVEN???
+    const killedUFOs = currentUFOs - survivingUFOs.length; // here we substract survivingUFOs (after filter) to previous UFOs (currentUFOs)
     this.player.score += killedUFOs;
-    // if (ufo.boomTime < 2) {
-    //   this.player.score++;
-    // }
 
+    // Once the fog of war has settled, count killedUFOs * 100 points and multiply by surviving cows
     if (this.ufoHerd.length <= 0) {
       this.finalScore = this.player.score * 100 * this.cowHerd.length;
     }
