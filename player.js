@@ -6,7 +6,8 @@ class Player {
     this.height = 100;
     this.bulletArray = [];
     this.bulletCount = 0;
-    // this.score = 0 /* pending score to be UFOs destroyed * cowsSaved(cowHerd.length) also show score somewhere... */
+    this.score = 0; /* pending score to be UFOs destroyed * cowsSaved(cowHerd.length) also show score somewhere... */
+    this.commentDurationCount = 180; // <- fps
   }
 
   preload() {
@@ -16,7 +17,6 @@ class Player {
 
   keyIsDown() {
     if (keyCode === SPACE_BAR) {
-      // console.log("bang");
       this.bulletBurst();
     }
   }
@@ -71,6 +71,8 @@ class Player {
 
     this.strayBullets();
 
+    // if chatTime > 0 - meter contador
+    // if count % array.length === 0 - esto hace que elija un elemento del array de forma ciclica
     this.commentOutLoud();
   }
 
@@ -84,5 +86,12 @@ class Player {
     );
     textSize(30);
     fill("white");
+    this.commentDurationCount--;
+
+    /*Otras frases:
+    I'll show you intergalactic rustlers what's what!
+    They took our jobs! And our cows! 
+    We'll build a wall to keep you out! 
+    I'm protected by God and the 2nd ammendment! */
   }
 }

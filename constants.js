@@ -8,6 +8,7 @@ const CANVAS_HEIGHT = 900;
 const CANVAS_WIDTH = 1800;
 let playerImg;
 let cowImg;
+let cowImgFlipped;
 let ufoImg;
 let gifLoadUFOXplosion;
 let gifCreateUFOXplosion;

@@ -15,7 +15,6 @@ class Bullet {
   }
 
   hit() {
-    // console.log("pam");
     this.hasCollided = true;
   }
 }

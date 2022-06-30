@@ -35,19 +35,21 @@ class Ufo {
 
   drawUfo() {
     //rect(this.left, this.top, this.width, this.height);
+    // if hit by bullet, make explosion, else, draw UFO:
     if (this.hasCollided) {
       image(gifLoadUFOXplosion, this.left, this.top, this.width, this.height);
       this.boomTime--;
     } else {
       image(ufoImg, this.left, this.top, this.width, this.height);
     }
-
+    // UFO drops until certain height then starts horizontal movement:
     if (this.top < CANVAS_HEIGHT / 3) {
       this.top += 5;
     } else if (this.top >= CANVAS_HEIGHT / 3) {
       this.ufoHorMove();
     }
   }
+  // method to acknowledge being hit by bullet:
   hit() {
     this.hasCollided = true;
   }
