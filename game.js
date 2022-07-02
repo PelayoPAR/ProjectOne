@@ -102,6 +102,11 @@ class Game {
     const killedUFOs = currentUFOs - survivingUFOs.length; // here we substract survivingUFOs (after filter) to previous UFOs (currentUFOs)
     this.player.score += killedUFOs;
 
+    // if a cow has been completely abducted, remove it from cowHerd
+    this.cowHerd = this.cowHerd.filter((cow) => {
+      return !cow.stowedOnUFO;
+    });
+
     // Once the fog of war has settled, count killedUFOs * 100 points and multiply by surviving cows
     if (this.ufoHerd.length <= 0) {
       this.finalScore = this.player.score * 100 * this.cowHerd.length;

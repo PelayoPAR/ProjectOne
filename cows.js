@@ -32,7 +32,6 @@ class Cow {
 
   drawCow() {
     // make cow's image face direction they're moving to by flipping the image (except for random naturally occuring moonwalking cows):
-    // const ascendingScale = 1 -
     if (this.direction === "left") {
       image(cowImg, this.left, this.top, this.width, this.height);
       this.moveCow();

@@ -119,6 +119,9 @@ class Ufo {
       if (this.target.top > this.top + 15) {
         this.target.top--;
       }
+      if (this.target.top <= this.top + 15) {
+        this.target.stowedOnUFO = true;
+      }
     }
     // while (this.target.top < this.top + this.height) {
     //   this.target.top--;
