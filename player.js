@@ -8,6 +8,7 @@ class Player {
     this.bulletCount = 0;
     this.score = 0; // after counting killed UFOs * 100 points, multiply by cowsSaved(cowHerd.length). PENDING: show score somewhere... */
     this.commentDurationCount = 180; // <- fps
+    this.timeToComment = 180;
     this.speed = 4;
   }
 
@@ -72,9 +73,20 @@ class Player {
 
     this.strayBullets();
 
-    // if chatTime > 0 - introduce counter
+    // if timeToComment > 0 - introduce counter
     // if count % array.length === 0 - esto hace que elija un elemento del array de forma ciclica
-    this.commentOutLoud();
+    if (this.timeToComment > 0) {
+      this.timeToComment--;
+    }
+    if (this.timeToComment <= 0) {
+      while (this.commentDurationCount > 0) {
+        this.commentOutLoud();
+      }
+      if (this.commentDurationCount <= 0) {
+        // this.timeToComment = 180;
+      }
+      // this.timeToComment = 180;
+    }
   }
 
   commentOutLoud() {
@@ -94,6 +106,7 @@ class Player {
     They took our jobs! And our cows! 
     We'll build a wall to keep y'all out! 
     I'm protected by God and the 2nd ammendment!
-    Get off mah propertah! */
+    Get off mah propertah! 
+    These aliens sure are illegal!*/
   }
 }

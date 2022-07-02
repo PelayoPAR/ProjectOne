@@ -37,6 +37,7 @@ class Game {
     ufoImg = loadImage("images/separateUFO2ndModel.svg"); // <- svg UFO image
     gifLoadUFOXplosion = loadImage("images/explosionCool.gif");
     // gifLoadUFO = loadImage("images/ufoMitPassengerGIF.gif"); //<- gif UFO image
+    abductingHalo = loadImage("images/ufoHaloScale.svg");
   }
 
   play() {

@@ -14,3 +14,4 @@ let ufoImg;
 let gifLoadUFOXplosion;
 let gifCreateUFOXplosion;
 let gifLoadUFO;
+let abductingHalo;

@@ -11,6 +11,9 @@ class Ufo {
     this.abducting = false;
     this.target = undefined;
     this.speed = 3;
+    this.aboveTarget = false;
+    this.hasCowStowed = false;
+    this.chasingCow = false;
   }
 
   preload() {
@@ -24,7 +27,7 @@ class Ufo {
     // define UFO horizontal speed here:
     this.left += this.speed * multiplier;
     // for explosions to leave canvas instead of bouncing on the edge:
-    if (!this.hasCollided) {
+    if (!this.hasCollided || !this.chasingCow) {
       // here is the change of direction: if reaching edge of canvas and going on a direction, change direction
       if (this.left < 5 && this.direction === "left") {
         this.direction = "right";
@@ -44,8 +47,21 @@ class Ufo {
       image(gifLoadUFOXplosion, this.left, this.top, this.width, this.height);
       this.boomTime--;
     } else {
+      if (this.aboveTarget) {
+        image(
+          abductingHalo,
+          this.left,
+          this.top - 2 * this.height,
+          this.width,
+          750
+        );
+      }
       image(ufoImg, this.left, this.top, this.width, this.height);
+      // if (this.aboveTarget) {
+      //   image(abductingHalo, this.left, this.top + this.height, 500, this.width);
+      // }
     }
+
     // UFO drops until certain height then starts horizontal movement:
     if (this.top < CANVAS_HEIGHT / 3) {
       this.top += 5;
@@ -61,25 +77,51 @@ class Ufo {
     this.hasCollided = true;
   }
 
-  abductio() /* perhaps introduce unluckyCow(this.target) and abductingUFO as parameters?? */ {
-    //choose abductingUFO and unluckyCow(this.target) from respective arrays
-    // console.log("all your cows are belong to us");
-    console.log(this.left);
-    console.log(this.target.left);
-    //then make UFO move horizontally towards cow:
-    if (this.left > this.target.left + 5) {
-      console.log("goLeft");
-      this.direction = "left";
-      this.ufoHorMove();
-    } else if (this.left < this.target.left - 5) {
-      console.log("goRight");
-      this.direction = "right";
-      this.ufoHorMove();
+  abductio() {
+    if (!this.aboveTarget) {
+      this.goToCow();
+    } else {
+      this.cowLevitatio();
     }
 
-    //then make cow move up towards UFO
-    if (this.target.top < this.top + this.height) {
-      this.target.top -= this.target.top;
+    // isAboveCow needs some margin to avoid UFO never reaching the exact pixel due to it not being multiple of speed.
+    const margin = 2 * this.speed;
+    const isAboveCow =
+      this.left + this.width / 2 > this.target.left - margin &&
+      this.left + this.width / 2 < this.target.left + margin;
+
+    if (isAboveCow) {
+      if (this.abducting) {
+        this.left = this.target.left - this.target.width / 2;
+        this.aboveTarget = true;
+      }
     }
+  }
+  //then make UFO move horizontally towards cow:
+  // "this.target.width / 2" makes the UFO center above the cow.
+  goToCow() {
+    this.ufoHorMove();
+    if (this.chasingCow) return;
+    if (this.left + this.target.width / 2 > this.target.left) {
+      this.direction = "left";
+    } else if (this.left - this.target.width / 2 < this.target.left) {
+      this.direction = "right";
+    }
+    this.chasingCow = true;
+  }
+
+  // then make cow move up towards UFO
+  cowLevitatio() {
+    if (
+      this.target.top > this.top
+      // this.hasCowStowed === false
+    ) {
+      if (this.target.top > this.top + 15) {
+        this.target.top--;
+      }
+    }
+    // while (this.target.top < this.top + this.height) {
+    //   this.target.top--;
+    // }
   }
 }

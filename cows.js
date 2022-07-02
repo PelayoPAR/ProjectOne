@@ -11,6 +11,7 @@ class Cow {
     this.moonWalk = moonWalk; // Having all cows moving forward normally made me a bit less happy xD
     this.abducted = false;
     this.speed = 1;
+    this.stowedOnUFO = false;
   }
 
   moveCow() {
@@ -19,10 +20,10 @@ class Cow {
     if (!this.abducted) {
       this.left += this.speed * multiplier;
     }
-    if (this.left < 5 && this.direction === "left") {
+    if (this.left < 75 && this.direction === "left") {
       this.direction = "right";
     } else if (
-      this.left > CANVAS_WIDTH - this.width &&
+      this.left > CANVAS_WIDTH - this.width - 75 &&
       this.direction === "right"
     ) {
       this.direction = "left";
@@ -31,6 +32,7 @@ class Cow {
 
   drawCow() {
     // make cow's image face direction they're moving to by flipping the image (except for random naturally occuring moonwalking cows):
+    // const ascendingScale = 1 -
     if (this.direction === "left") {
       image(cowImg, this.left, this.top, this.width, this.height);
       this.moveCow();
