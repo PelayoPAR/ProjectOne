@@ -8,9 +8,9 @@ class Ufo {
     this.direction = "left";
     this.hasCollided = false; //<- has it collided with a bullet? Y/N
     this.boomTime = 90; //<- in frames
+    this.speed = 3;
     this.abducting = false;
     this.target = undefined;
-    this.speed = 3;
     this.aboveTarget = false;
     this.hasCowStowed = false;
     this.chasingCow = false;
@@ -65,18 +65,22 @@ class Ufo {
     // UFO drops until certain height then starts horizontal movement:
     if (this.top < CANVAS_HEIGHT / 3) {
       this.top += 5;
+      // had to exclude when abducting in order to be able to initiate this.abductio() below:
     } else if (this.top >= CANVAS_HEIGHT / 3 && !this.abducting) {
       this.ufoHorMove();
     }
+    // this.abducting initiates abduction after being updated by game.abductioEvent():
     if (this.abducting) {
       this.abductio();
     }
   }
+
   // method to acknowledge being hit by bullet:
   hit() {
     this.hasCollided = true;
   }
 
+  //if UFO is not above the cow, position UFO on top of cow. Once on top, move the cow towards UFO
   abductio() {
     if (!this.aboveTarget) {
       this.goToCow();
@@ -84,12 +88,14 @@ class Ufo {
       this.cowLevitatio();
     }
 
-    // isAboveCow needs some margin to avoid UFO never reaching the exact pixel due to it not being multiple of speed.
+    // isAboveCow needs some margin to avoid UFO never reaching the exact pixel due to the exact pixel not being multiple of speed.
     const margin = 2 * this.speed;
+    // So isAboveCow is a more or less wide space where the UFO will jump to position above the cow. This is to avoid a bug where the UFO would never reach the exact position
     const isAboveCow =
       this.left + this.width / 2 > this.target.left - margin &&
       this.left + this.width / 2 < this.target.left + margin;
 
+    //if on top of cow and UFO is in abducting status, jump to position and update aboveTarget status
     if (isAboveCow) {
       if (this.abducting) {
         this.left = this.target.left - this.target.width / 2;
@@ -97,6 +103,7 @@ class Ufo {
       }
     }
   }
+
   //then make UFO move horizontally towards cow:
   // "this.target.width / 2" makes the UFO center above the cow.
   goToCow() {
@@ -112,19 +119,14 @@ class Ufo {
 
   // then make cow move up towards UFO
   cowLevitatio() {
-    if (
-      this.target.top > this.top
-      // this.hasCowStowed === false
-    ) {
+    if (this.target.top > this.top) {
       if (this.target.top > this.top + 15) {
         this.target.top--;
       }
       if (this.target.top <= this.top + 15) {
         this.target.stowedOnUFO = true;
+        // once unluckyCow.stowedOnUFO is true, game.js-play() will filter the cowHerd array to remove said UnluckyCow
       }
     }
-    // while (this.target.top < this.top + this.height) {
-    //   this.target.top--;
-    // }
   }
 }

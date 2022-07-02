@@ -113,7 +113,7 @@ class Game {
     }
   }
 
-  //  in case of machine gun
+  // break glass in case of machine gun powerup
   //  keyPressed() {
   //    this.player.keyPressed();
   //  }
@@ -158,18 +158,18 @@ class Game {
       isRightOfABiggerThanLeftOfB
     );
   }
-  abductioEvent() {
-    const cowsNotAbducted = this.cowHerd.filter((cow) => !cow.abducted);
-    if (!cowsNotAbducted.length) return;
-    const unluckyCow =
-      cowsNotAbducted[Math.floor(Math.random() * cowsNotAbducted.length)]; // filter in order to avoid choosing same cow twice
 
-    const ufosNotAbducting = this.ufoHerd.filter((ufo) => !ufo.abducting);
+  abductioEvent() {
+    const cowsNotAbducted = this.cowHerd.filter((cow) => !cow.abducted); //we need to work with filtered array as explained below
+    if (!cowsNotAbducted.length) return; // this line avoids errors when calling AbductioEvent() when there are no cows left.
+    const unluckyCow =
+      cowsNotAbducted[Math.floor(Math.random() * cowsNotAbducted.length)]; // filtered in order to avoid choosing same cow twice
+
+    const ufosNotAbducting = this.ufoHerd.filter((ufo) => !ufo.abducting); // similar case as with cows
     if (!ufosNotAbducting.length) return;
     const abductingUFO =
-      ufosNotAbducting[Math.floor(Math.random() * ufosNotAbducting.length)];
+      ufosNotAbducting[Math.floor(Math.random() * ufosNotAbducting.length)]; // similar case as with cows
 
-    // AbductingUFO  - must move towards unluckyCow and? - beam it up (easier said than done innit?)
     console.log(abductingUFO);
     // first, make cow and UFO stop
     abductingUFO.abducting = true;

@@ -7,10 +7,10 @@ class Cow {
     this.cowFloor = top;
     this.height = 50;
     this.width = 75;
+    this.speed = 1;
     this.direction = "left";
     this.moonWalk = moonWalk; // Having all cows moving forward normally made me a bit less happy xD
     this.abducted = false;
-    this.speed = 1;
     this.stowedOnUFO = false;
   }
 
