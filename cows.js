@@ -20,6 +20,7 @@ class Cow {
     if (!this.abducted) {
       this.left += this.speed * multiplier;
     }
+    //margin of 75 introduced in order to avoid bug occurring near Canvas vertical edges, due to UFOs being wider than cows.
     if (this.left < 75 && this.direction === "left") {
       this.direction = "right";
     } else if (

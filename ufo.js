@@ -85,7 +85,12 @@ class Ufo {
     if (!this.aboveTarget) {
       this.goToCow();
     } else {
-      this.cowLevitatio();
+      if (!this.hasCollided) {
+        this.cowLevitatio();
+      }
+      if (this.hasCollided) {
+        this.cowGravitatio();
+      }
     }
 
     // isAboveCow needs some margin to avoid UFO never reaching the exact pixel due to the exact pixel not being multiple of speed.
@@ -124,9 +129,19 @@ class Ufo {
         this.target.top--;
       }
       if (this.target.top <= this.top + 15) {
+        // once unluckyCow.stowedOnUFO is true, game.js-play() will filter the cowHerd array to remove said UnluckyCow:
         this.target.stowedOnUFO = true;
-        // once unluckyCow.stowedOnUFO is true, game.js-play() will filter the cowHerd array to remove said UnluckyCow
+        // UFO should go back to initial state cuz they greedy and want moar cows.
+        this.abducting = false;
+        this.aboveTarget = false;
       }
+    }
+  }
+  // If the UFO is destroyed while tractor beaming the cow up, the cow should go back down to the floor and go back to its cow business as usual.
+  cowGravitatio() {
+    if (this.target.top < this.target.cowFloor) {
+      this.target.top += 7;
+      this.target.abducted = false; // due to the amazing power of OOP, this simple reassignment makes the cow revert back to original status (expcept some bug proving otherwise)
     }
   }
 }
