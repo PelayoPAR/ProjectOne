@@ -6,10 +6,11 @@ class Player {
     this.height = 100;
     this.bulletArray = [];
     this.bulletCount = 0;
-    this.score = 0; // after counting killed UFOs * 100 points, multiply by cowsSaved(cowHerd.length). PENDING: show score somewhere... */
+    this.score = 0; // after counting killed UFOs * 100 points, multiply by cowsSaved(cowHerd.length). ***PENDING: show score somewhere... */
     this.commentDurationCount = 180; // <- fps
     this.timeToComment = 180;
     this.speed = 4;
+    this.allowedBurst = 3;
   }
 
   preload() {
@@ -26,7 +27,7 @@ class Player {
   bulletBurst() {
     const gunLocation = this.farmerGunLocation();
     // limit ROF to 3 bullets on screen:
-    if (this.bulletArray.length < 3) {
+    if (this.bulletArray.length < this.allowedBurst) {
       this.bulletArray.push(
         new Bullet(
           gunLocation.left,

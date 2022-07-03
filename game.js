@@ -5,7 +5,7 @@ class Game {
 
     // this.cow = new Cow(); <- for single cow object
     this.cowHerd = [];
-    // takes numberofCows from game constructor and makes them all appear at once.
+    // takes numberofCows from game constructor and makes them all appear at once at the beginning of the game.
     for (let i = 0; i < numberOfCows; i++) {
       const moonWalkDice = Math.floor(Math.random() * 2) >= 1; // <- the >= 1 turns it into boolean for easier management.
       const randomX = Math.floor(Math.random() * 1750 + 50);
@@ -42,15 +42,16 @@ class Game {
 
   play() {
     this.background.drawBackground();
-    // console.log(game.ufoHerd);
 
     // this.ufo.drawUfo(); <- for single UFO object
     this.ufoHerd.forEach((ufo) => {
       ufo.drawUfo();
     });
+
     this.cowHerd.forEach((cow) => {
       cow.drawCow();
     });
+
     // drawing player after cows draws player in front of cows (z index)
     this.player.drawPlayer();
 
@@ -73,13 +74,13 @@ class Game {
             const dice = Math.floor(Math.random() * 10);
             if (!ufo.hasCollided && dice >= 4) {
               this.numberOfUFOs--;
-              console.log(this.numberOfUFOs);
+              console.log(this.numberOfUFOs); //cheat code to know if the killed UFO has been deducted from ufoHerd array.
             }
             // important! ufo.hit() must be run here below to avoid hit duplication
             ufo.hit();
           }
           //important! ufo.boomTime is initially set to 90 frames countdown,
-          // it's important that it is accounted for 1 frame after in order to avoid hit duplication
+          // it's important that it is accounted for 1 frame after hit in order to avoid hit duplication while still allowing bullets to go through explosions:
           if (ufo.boomTime >= 89) {
             bullet.hit();
           }
@@ -98,9 +99,10 @@ class Game {
     const survivingUFOs = this.ufoHerd.filter((ufo) => {
       return ufo.boomTime > 0;
     });
+    // redeclare ufoHerd in order to update it and remove UFOs that have been hit:
     this.ufoHerd = survivingUFOs;
-    const killedUFOs = currentUFOs - survivingUFOs.length; // here we substract survivingUFOs (after filter) to previous UFOs (currentUFOs)
-    this.player.score += killedUFOs;
+    const killedUFOs = currentUFOs - survivingUFOs.length; // here we substract survivingUFOs (after filter) to previous UFOs (currentUFOs) to keep track of score.
+    this.player.score += killedUFOs; // we keep adding destroyed UFOs to the player score
 
     // if a cow has been completely abducted, remove it from cowHerd
     this.cowHerd = this.cowHerd.filter((cow) => {
@@ -111,6 +113,8 @@ class Game {
     if (this.ufoHerd.length <= 0) {
       this.finalScore = this.player.score * 100 * this.cowHerd.length;
     }
+
+    // *** !IMPORTANT PENDING: call abductioEvent() in some random (but limited) way that still makes sense for the gameplay.
   }
 
   // break glass in case of machine gun powerup

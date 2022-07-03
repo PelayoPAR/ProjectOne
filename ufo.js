@@ -9,11 +9,11 @@ class Ufo {
     this.hasCollided = false; //<- has it collided with a bullet? Y/N
     this.boomTime = 90; //<- in frames
     this.speed = 3;
-    this.abducting = false;
-    this.target = undefined;
-    this.aboveTarget = false;
-    this.hasCowStowed = false;
-    this.chasingCow = false;
+    this.abducting = false; // initial abducting state
+    this.target = undefined; // unluckyCow will be passed here
+    this.chasingCow = false; // if not on top of unluckyCow, the UFO will move towards the unluckyCow.
+    this.aboveTarget = false; // once abducting, confirms that UFO is on top of the unluckyCow
+    this.hasCowStowed = false; // after tractor beaming the cow up, this state confirms that the unluckyCow has been safely stowed, linking it's fate to the UFO's.
   }
 
   preload() {
@@ -131,6 +131,7 @@ class Ufo {
       if (this.target.top <= this.top + 15) {
         // once unluckyCow.stowedOnUFO is true, game.js-play() will filter the cowHerd array to remove said UnluckyCow:
         this.target.stowedOnUFO = true;
+        console.log(game.cowHerd);
         // UFO should go back to initial state cuz they greedy and want moar cows.
         this.abducting = false;
         this.aboveTarget = false;

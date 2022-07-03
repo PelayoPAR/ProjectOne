@@ -1,7 +1,7 @@
 class Cow {
   constructor(left, top, id, moonWalk = false) {
     //moonWalk = false is parameter default value
-    this.id = id;
+    this.id = id; // <- cowId = cow's cowHerd index
     this.left = left;
     this.top = top;
     this.cowFloor = top;
@@ -10,8 +10,8 @@ class Cow {
     this.speed = 1;
     this.direction = "left";
     this.moonWalk = moonWalk; // Having all cows moving forward normally made me a bit less happy xD
-    this.abducted = false;
-    this.stowedOnUFO = false;
+    this.abducted = false; // if true, the cow will be forced to stop by some advanced alien technology.
+    this.stowedOnUFO = false; // if true, the cow will be kept on the UFO.
   }
 
   moveCow() {
@@ -38,8 +38,10 @@ class Cow {
       this.moveCow();
     } else if (this.direction === "right") {
       if (!this.moonWalk) {
+        //if it's not a moonwalking cow, cow will flip when reaching the left canvas border:
         image(cowImgFlipped, this.left, this.top, this.width, this.height);
       } else {
+        //if it's a way more interesting moonwalking cow, it will moonwalk itself to the other side thanks to Monsanto's MJ cow patented genome:
         image(cowImg, this.left, this.top, this.width, this.height);
       }
       this.moveCow();
