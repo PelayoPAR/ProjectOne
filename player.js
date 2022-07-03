@@ -27,7 +27,7 @@ class Player {
   bulletBurst() {
     const gunLocation = this.farmerGunLocation();
     // limit ROF to 3 bullets on screen:
-    if (this.bulletArray.length < this.allowedBurst) {
+    if (this.bulletArray.length < this.allowedBurst && frameCount > 480) {
       this.bulletArray.push(
         new Bullet(
           gunLocation.left,

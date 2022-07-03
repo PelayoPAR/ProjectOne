@@ -1,6 +1,7 @@
 class Game {
   constructor(numberOfCows, numberOfUFOs) {
     this.background = new Background();
+    // takes numberofUFOs from game constructor
     this.numberOfUFOs = numberOfUFOs;
 
     // this.cow = new Cow(); <- for single cow object
@@ -13,8 +14,7 @@ class Game {
     }
 
     // this.ufo = new Ufo(); <- for single UFO object
-    // takes numberofUFOs from game constructor
-    this.ufoHerd = [];
+    this.ufoHerd = []; // <- for UFO array
 
     // this makes UFOs appear all at once:
     // for (let i = 0; i < numberOfUFOs; i++) {
@@ -24,11 +24,10 @@ class Game {
 
     this.player = new Player();
     this.finalScore = 0;
-    this.UFOcounter = 0;
+    this.UFOcounter = 0; //equivalent to game.player.score
   }
 
   preload() {
-    // pending changing load order so that player goes in top of the cows
     playerImg = this.player.preload();
     this.background.preload();
     // this.ufo.preload(); <- for single UFO object
@@ -74,7 +73,7 @@ class Game {
             const dice = Math.floor(Math.random() * 10);
             if (!ufo.hasCollided && dice >= 4) {
               this.numberOfUFOs--;
-              console.log(this.numberOfUFOs); //cheat code to know if the killed UFO has been deducted from ufoHerd array.
+              // console.log(this.numberOfUFOs); //cheat code to know if the killed UFO has been deducted from ufoHerd array.
             }
             // important! ufo.hit() must be run here below to avoid hit duplication
             ufo.hit();
@@ -95,30 +94,34 @@ class Game {
     // after scanning for exploded UFOs, remove them from ufoHerd array and keep track of score
     const currentUFOs = this.ufoHerd.length; // <- this number will have killedUFOs substracted to keep track of score
 
-    // return only unscathed UFOs
+    // return only unscathed UFOs.
     const survivingUFOs = this.ufoHerd.filter((ufo) => {
       return ufo.boomTime > 0;
     });
-    // redeclare ufoHerd in order to update it and remove UFOs that have been hit:
-    this.ufoHerd = survivingUFOs;
-    const killedUFOs = currentUFOs - survivingUFOs.length; // here we substract survivingUFOs (after filter) to previous UFOs (currentUFOs) to keep track of score.
-    this.player.score += killedUFOs; // we keep adding destroyed UFOs to the player score
 
     // if a cow has been completely abducted, remove it from cowHerd
     this.cowHerd = this.cowHerd.filter((cow) => {
       return !cow.stowedOnUFO;
     });
 
+    //call abductioEvent() in some random (but somewhat limited) way that still makes sense for the gameplay:
+    const abductioDice = Math.floor(Math.random() * 10);
+    if (frameCount > 540 && frameCount % 120 === 0 && abductioDice >= 4) {
+      this.abductioEvent();
+    }
+
+    //Redeclare ufoHerd in order to update it and remove UFOs that have been hit:
+    this.ufoHerd = survivingUFOs;
+    const killedUFOs = currentUFOs - survivingUFOs.length; // here we substract survivingUFOs (after filter) to previous UFOs (currentUFOs) to keep track of score.
+    this.player.score += killedUFOs; // we keep adding destroyed UFOs to the player score
+
     // Once the fog of war has settled, count killedUFOs * 100 points and multiply by surviving cows
     if (this.ufoHerd.length <= 0) {
       this.finalScore = this.player.score * 100 * this.cowHerd.length;
     }
 
-    // *** !IMPORTANT PENDING: call abductioEvent() in some random (but limited) way that still makes sense for the gameplay.
-    const abductioDice = Math.floor(Math.random() * 10);
-    if (frameCount > 540 && frameCount % 120 === 0 && abductioDice >= 4) {
-      this.abductioEvent();
-    }
+    //display score:
+    this.scoreDraw();
   }
 
   // break glass in case of machine gun powerup
@@ -178,13 +181,22 @@ class Game {
     const abductingUFO =
       ufosNotAbducting[Math.floor(Math.random() * ufosNotAbducting.length)]; // similar case as with cows
 
-    console.log(abductingUFO);
-    console.log(unluckyCow);
     // first, make cow and UFO stop
     abductingUFO.abducting = true;
     unluckyCow.abducted = true;
 
     // provide target for UFO:
-    abductingUFO.target = unluckyCow; // passing cow by reference, if I change it wherever it'll change everywhere
+    abductingUFO.target = unluckyCow; // passing cow by reference. Keep in mind: if it's changed wherever it'll change everywhere
+  }
+
+  scoreDraw() {
+    let score = this.player.score * 100;
+    if (this.cowHerd <= 0 || this.ufoHerd <= 0) {
+      text(this.finalScore, CANVAS_WIDTH - 200, 50, 50, 50);
+      textFont("Orbitron");
+    } else {
+      text(score, CANVAS_WIDTH - 200, 50, 50, 50);
+      textFont("Orbitron");
+    }
   }
 }

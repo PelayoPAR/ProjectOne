@@ -125,7 +125,6 @@ class Ufo {
       if (this.target.top <= this.top + 15) {
         // once unluckyCow.stowedOnUFO is true, game.js-play() will filter the cowHerd array to remove said UnluckyCow:
         this.target.stowedOnUFO = true;
-        console.log(game.cowHerd);
         // UFO should go back to initial state cuz they greedy and want moar cows.
         this.abducting = false;
         this.aboveTarget = false;
