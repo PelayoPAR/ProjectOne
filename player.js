@@ -7,10 +7,10 @@ class Player {
     this.bulletArray = [];
     this.bulletCount = 0;
     this.score = 0; // after counting killed UFOs * 100 points, multiply by cowsSaved(cowHerd.length). ***PENDING: show score somewhere... */
-    this.commentDurationCount = 180; // <- fps
-    this.timeToComment = 180;
+    this.timeToComment = 360; // <- fps
     this.speed = 4;
     this.allowedBurst = 3;
+    this.phrasesCounter = 0;
   }
 
   preload() {
@@ -74,40 +74,43 @@ class Player {
 
     this.strayBullets();
 
-    // if timeToComment > 0 - introduce counter
-    // if count % array.length === 0 - esto hace que elija un elemento del array de forma ciclica
+    // Our farmer has something to say:
+    // the idea is to have a countdown from 360 (6 secs fps), once it reaches 180 the farmer commentsOutLoud. When it reaches 0 it counts 1 phrase and resets the timer
     if (this.timeToComment > 0) {
       this.timeToComment--;
     }
+    if (this.timeToComment < 180 && this.timeToComment > 0) {
+      this.commentOutLoud();
+    }
     if (this.timeToComment <= 0) {
-      while (this.commentDurationCount > 0) {
-        this.commentOutLoud();
-      }
-      if (this.commentDurationCount <= 0) {
-        // this.timeToComment = 180;
-      }
-      // this.timeToComment = 180;
+      this.phrasesCounter++; // this is important so it cycles through the different phrases
+      this.timeToComment = 360;
     }
   }
 
   commentOutLoud() {
+    const phrasesArray = [
+      "YOU JUST WAIT TILL I RELOAD MY GUN",
+      "I'LL SHOW YOU INTERGALACTIC RUSTLERS WHAT'S WHAT!",
+      "I'M PROTECTED BY GOD AND THE 2ND AMMENDMENT!",
+      "YOU GOSHDARN ALIENS!!!",
+      "WE'LL BUILD A WALL TO KEEP Y'ALL OUT! ",
+      "THEY TOOK OUR JOBS! AND OUR COWS! ",
+      "WELCOME TO IOWA!!!",
+      "GET OFF MAH PROPERTAH! ",
+      "THESE ALIENS SURELY ARE ILLEGAL!",
+      "DON'T THREAD ON ME!",
+    ];
+
+    // phrasesArray[this.phrasesCounter % phrasesArray.length];
     text(
-      "You goshdarn aliens!!!",
-      this.left + this.width,
-      this.top - this.height - 80,
-      300,
+      phrasesArray[this.phrasesCounter % phrasesArray.length],
+      this.left + 75,
+      this.top - this.height - 125,
+      500,
       200
     );
     textSize(30);
     fill("white");
-    this.commentDurationCount--;
-
-    /*Otras frases:
-    I'll show you intergalactic rustlers what's what!
-    They took our jobs! And our cows! 
-    We'll build a wall to keep y'all out! 
-    I'm protected by God and the 2nd ammendment!
-    Get off mah propertah! 
-    These aliens sure are illegal!*/
   }
 }

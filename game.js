@@ -191,7 +191,7 @@ class Game {
 
   scoreDraw() {
     let score = this.player.score * 100;
-    if (this.cowHerd <= 0 || this.ufoHerd <= 0) {
+    if (this.cowHerd <= 0 || (this.ufoHerd <= 0 && frameCount % 240 === 0)) { // pending counter for final score instead of using frameCount
       text(this.finalScore, CANVAS_WIDTH - 200, 50, 50, 50);
       textFont("Orbitron");
     } else {
