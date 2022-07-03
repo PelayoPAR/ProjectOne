@@ -179,6 +179,7 @@ class Game {
       ufosNotAbducting[Math.floor(Math.random() * ufosNotAbducting.length)]; // similar case as with cows
 
     console.log(abductingUFO);
+    console.log(unluckyCow);
     // first, make cow and UFO stop
     abductingUFO.abducting = true;
     unluckyCow.abducted = true;

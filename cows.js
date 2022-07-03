@@ -41,10 +41,19 @@ class Cow {
         //if it's not a moonwalking cow, cow will flip when reaching the left canvas border:
         image(cowImgFlipped, this.left, this.top, this.width, this.height);
       } else {
-        //if it's a way more interesting moonwalking cow, it will moonwalk itself to the other side thanks to Monsanto's MJ cow patented genome:
+        //if it's a way more interesting moonwalking cow, it will moonwalk itself to the other side thanks to Monsanto's Michael Jackson hybrid cow patented genome:
         image(cowImg, this.left, this.top, this.width, this.height);
       }
       this.moveCow();
+    }
+  }
+
+  // cowGravitatio method used to be an UFO object method, it's been passed to Cow method in order to avoid bug where cow would remain immobile.
+  // If the UFO is destroyed while tractor beaming the cow up, the cow should go back down to the floor and go back to its cow business as usual.
+  cowGravitatio() {
+    if (this.top < this.cowFloor) {
+      this.top += 7;
+      this.abducted = false;
     }
   }
 }
