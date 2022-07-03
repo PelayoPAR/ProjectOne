@@ -78,6 +78,10 @@ class Ufo {
   // method to acknowledge being hit by bullet:
   hit() {
     this.hasCollided = true;
+    // !IMPORTANT PENDING *** BUG: Some cows don't go back to cow.abducted = false even after abducting UFO is destroyed...
+    if (this.abducting) {
+      this.target.abducted = false;
+    }
   }
 
   //if UFO is not above the cow, position UFO on top of cow. Once on top, move the cow towards UFO
@@ -138,6 +142,7 @@ class Ufo {
       }
     }
   }
+
   // If the UFO is destroyed while tractor beaming the cow up, the cow should go back down to the floor and go back to its cow business as usual.
   cowGravitatio() {
     if (this.target.top < this.target.cowFloor) {

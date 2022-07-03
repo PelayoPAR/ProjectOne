@@ -115,6 +115,10 @@ class Game {
     }
 
     // *** !IMPORTANT PENDING: call abductioEvent() in some random (but limited) way that still makes sense for the gameplay.
+    const abductioDice = Math.floor(Math.random() * 10);
+    if (frameCount > 540 && frameCount % 120 === 0 && abductioDice >= 4) {
+      this.abductioEvent();
+    }
   }
 
   // break glass in case of machine gun powerup
