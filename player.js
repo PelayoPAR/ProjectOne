@@ -102,9 +102,8 @@ class Player {
       "DON'T THREAD ON ME!",
     ];
 
-    // phrasesArray[this.phrasesCounter % phrasesArray.length];
     text(
-      phrasesArray[this.phrasesCounter % phrasesArray.length],
+      phrasesArray[this.phrasesCounter % phrasesArray.length], // <- this nifty trick allows for the counter to never be a higher number than the length of the array! Sweet!
       this.left + 75,
       this.top - this.height - 125,
       500,

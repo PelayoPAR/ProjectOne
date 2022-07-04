@@ -25,6 +25,7 @@ class Game {
     this.player = new Player();
     this.finalScore = 0;
     this.UFOcounter = 0; //equivalent to game.player.score
+    this.gameOverCounter = 300;
   }
 
   preload() {
@@ -122,6 +123,10 @@ class Game {
 
     //display score:
     this.scoreDraw();
+
+    if (this.gameOverCounter < -1200) {
+      this.gameOverCounter = 1;
+    }
   }
 
   // break glass in case of machine gun powerup
@@ -191,8 +196,10 @@ class Game {
 
   scoreDraw() {
     let score = this.player.score * 100;
-    if (this.cowHerd <= 0 || (this.ufoHerd <= 0 && frameCount % 240 === 0)) { // pending counter for final score instead of using frameCount
-      text(this.finalScore, CANVAS_WIDTH - 200, 50, 50, 50);
+    if (this.ufoHerd <= 0) {
+      this.gameOverCounter--;
+      if (this.ufoHerd <= 0 && this.gameOverCounter <= 0)
+        text(this.finalScore, CANVAS_WIDTH - 200, 50, 50, 50);
       textFont("Orbitron");
     } else {
       text(score, CANVAS_WIDTH - 200, 50, 50, 50);
