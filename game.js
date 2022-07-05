@@ -40,9 +40,9 @@ class Game {
     abductingHalo = loadImage("images/ufoHaloScale.svg");
     gunShotSound = loadSound("sounds/makarov-shoot-36241.mp3");
     backGroundMusic = loadSound(
-      "/sounds/Komiku_-_07_-_Last_Boss__Lets_see_what_we_got.mp3"
+      "sounds/Komiku_-_07_-_Last_Boss__Lets_see_what_we_got.mp3"
     );
-    ufoExplosionSound = loadSound("/sounds/musket-explosion-6383.mp3");
+    ufoExplosionSound = loadSound("sounds/musket-explosion-6383.mp3");
   }
 
   play() {
@@ -207,7 +207,15 @@ class Game {
       if (this.ufoHerd <= 0 && this.gameOverCounter <= 0) {
         text(this.finalScore, CANVAS_WIDTH - 200, 50, 50, 50);
         textFont("Orbitron");
-        
+        // text(
+        //   "WELL DONE!!! YOU DEFENDED YOUR PROPERTAH!!! UFOs Destroyed 🛸 :   " this.UFOcounter /* or score */ +
+        //     " Cows Saved 🐮 :   " + this.cowHerd.length + " Final Score 🏅 :   " + this.finalScore,
+        //   CANVAS_WIDTH / 2 - 300,
+        //   CANVAS_HEIGHT / 2 - 100,
+        //   750,
+        //   200
+        // );
+        // text("Final Score: " + this.finalScore, CANVAS_WIDTH / 2 - 300, CANVAS_HEIGHT / 2 + 200, 600, 100)
       }
     } else {
       text(score, CANVAS_WIDTH - 200, 50, 50, 50);
