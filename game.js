@@ -25,7 +25,7 @@ class Game {
     this.player = new Player();
     this.finalScore = 0;
     this.UFOcounter = 0; //equivalent to game.player.score
-    this.gameOverCounter = 300;
+    this.gameOverCounter = 300; //<- fps
   }
 
   preload() {
@@ -38,18 +38,24 @@ class Game {
     gifLoadUFOXplosion = loadImage("images/explosionCool.gif");
     // gifLoadUFO = loadImage("images/ufoMitPassengerGIF.gif"); //<- gif UFO image
     abductingHalo = loadImage("images/ufoHaloScale.svg");
+    gunShotSound = loadSound("sounds/makarov-shoot-36241.mp3");
+    backGroundMusic = loadSound(
+      "/sounds/Komiku_-_07_-_Last_Boss__Lets_see_what_we_got.mp3"
+    );
+    ufoExplosionSound = loadSound("/sounds/musket-explosion-6383.mp3");
   }
 
   play() {
     this.background.drawBackground();
 
     // this.ufo.drawUfo(); <- for single UFO object
-    this.ufoHerd.forEach((ufo) => {
-      ufo.drawUfo();
-    });
 
     this.cowHerd.forEach((cow) => {
       cow.drawCow();
+    });
+
+    this.ufoHerd.forEach((ufo) => {
+      ufo.drawUfo();
     });
 
     // drawing player after cows draws player in front of cows (z index)
@@ -88,7 +94,7 @@ class Game {
       });
     });
 
-    // after scanning for hits, eliminate bullets and ufos from bulletArray accordingly
+    // after scanning for hits, eliminate bullets and from bulletArray accordingly
     this.player.bulletArray = this.player.bulletArray.filter((bullet) => {
       return !bullet.hasCollided;
     });
@@ -198,9 +204,11 @@ class Game {
     let score = this.player.score * 100;
     if (this.ufoHerd <= 0) {
       this.gameOverCounter--;
-      if (this.ufoHerd <= 0 && this.gameOverCounter <= 0)
+      if (this.ufoHerd <= 0 && this.gameOverCounter <= 0) {
         text(this.finalScore, CANVAS_WIDTH - 200, 50, 50, 50);
-      textFont("Orbitron");
+        textFont("Orbitron");
+        
+      }
     } else {
       text(score, CANVAS_WIDTH - 200, 50, 50, 50);
       textFont("Orbitron");

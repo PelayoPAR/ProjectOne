@@ -9,7 +9,7 @@ class Player {
     this.score = 0; // after counting killed UFOs * 100 points, multiply by cowsSaved(cowHerd.length). ***PENDING: show score somewhere... */
     this.timeToComment = 360; // <- fps
     this.speed = 4;
-    this.allowedBurst = 3;
+    this.allowedBurst = 2;
     this.phrasesCounter = 0;
   }
 
@@ -26,7 +26,7 @@ class Player {
 
   bulletBurst() {
     const gunLocation = this.farmerGunLocation();
-    // limit ROF to 3 bullets on screen:
+    // limit ROF to x bullets on screen(allowedBurst):
     if (this.bulletArray.length < this.allowedBurst && frameCount > 480) {
       this.bulletArray.push(
         new Bullet(
@@ -37,6 +37,8 @@ class Player {
         )
       );
       this.bulletCount++;
+      gunShotSound.play();
+      gunShotSound.setVolume(0.3);
     }
   }
 
@@ -96,7 +98,7 @@ class Player {
       "YOU GOSHDARN ALIENS!!!",
       "WE'LL BUILD A WALL TO KEEP Y'ALL OUT! ",
       "THEY TOOK OUR JOBS! AND OUR COWS! ",
-      "WELCOME TO IOWA!!!",
+      "WELCOME TO IOWA M#*%&@F%*#&R$!!!",
       "GET OFF MAH PROPERTAH! ",
       "THESE ALIENS SURELY ARE ILLEGAL!",
       "DON'T THREAD ON ME!",

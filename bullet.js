@@ -3,8 +3,8 @@ class Bullet {
     this.id = bulletCount;
     this.left = left;
     this.top = top;
-    this.width = 10;
-    this.height = 10;
+    this.width = 15;
+    this.height = 15;
     this.img = bulletImg;
     this.hasCollided = false;
     this.muzzleVelocity = 7;
@@ -17,5 +17,7 @@ class Bullet {
 
   hit() {
     this.hasCollided = true;
+    ufoExplosionSound.play();
+    ufoExplosionSound.setVolume(0.5);
   }
 }

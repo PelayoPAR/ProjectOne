@@ -15,3 +15,6 @@ let gifLoadUFOXplosion;
 let gifCreateUFOXplosion;
 let gifLoadUFO;
 let abductingHalo;
+let gunShotSound;
+let backGroundMusic;
+let ufoExplosionSound;

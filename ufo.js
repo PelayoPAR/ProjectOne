@@ -120,7 +120,7 @@ class Ufo {
   cowLevitatio() {
     if (this.target.top > this.top) {
       if (this.target.top > this.top + 15) {
-        this.target.top--;
+        this.target.top -= 1.5;
       }
       if (this.target.top <= this.top + 15) {
         // once unluckyCow.stowedOnUFO is true, game.js-play() will filter the cowHerd array to remove said UnluckyCow:
