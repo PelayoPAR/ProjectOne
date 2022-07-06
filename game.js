@@ -202,7 +202,7 @@ class Game {
 
   scoreDraw() {
     let score = this.player.score * 100;
-    if (this.ufoHerd <= 0) {
+    if ((this.ufoHerd <= 0 || this, this.cowHerd.length <= 0)) {
       this.gameOverCounter--;
       if (this.ufoHerd <= 0 && this.gameOverCounter <= 0) {
         text(this.finalScore, CANVAS_WIDTH - 200, 50, 50, 50);
@@ -220,6 +220,18 @@ class Game {
           700,
           200
         );
+      }
+      if (this.cowHerd.length <= 0 && this.gameOverCounter <= 0) {
+        text(
+          "GAME OVER!!!                                                  ALL YOUR COWS ARE BELONG TO US!!!",
+          CANVAS_WIDTH / 2 - 300,
+          CANVAS_HEIGHT / 2,
+          700,
+          200
+        );
+        // push();
+        // fill("red");
+        // pop();
       }
     } else {
       text(score, CANVAS_WIDTH - 200, 50, 50, 50);
