@@ -3,14 +3,14 @@
 // the general idea is that you should be able to almost copy paste the main file between your projects and the projects should behave the same
 
 // we instantiate the game in this main file because is the only thing it should know that it exists. and then from that point every responsability gets moved to the game class
-const game = new Game(2 , 10); // calling numberOfCows and numberOfUFOs as arguiments allows for flexibility and perhaps different game levels customization.
+const game = new Game(10, 10); // calling numberOfCows and numberOfUFOs as arguiments allows for flexibility and perhaps different game levels customization.
 
 function setup() {
   createCanvas(CANVAS_WIDTH, CANVAS_HEIGHT);
-  // backGroundMusic.play();
-  // backGroundMusic.loop();
-  // backGroundMusic.setVolume(0.1);
-  // userStartAudio();
+  backGroundMusic.play();
+  backGroundMusic.loop();
+  backGroundMusic.setVolume(0.1);
+  userStartAudio();
 }
 
 // we call game.play because this main file should not care what, why, how, when something is drawn. those questions should be answered by the game, instead of the main file
