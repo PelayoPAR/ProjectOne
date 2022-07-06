@@ -207,15 +207,19 @@ class Game {
       if (this.ufoHerd <= 0 && this.gameOverCounter <= 0) {
         text(this.finalScore, CANVAS_WIDTH - 200, 50, 50, 50);
         textFont("Orbitron");
-        // text(
-        //   "WELL DONE!!! YOU DEFENDED YOUR PROPERTAH!!! UFOs Destroyed 🛸 :   " this.UFOcounter /* or score */ +
-        //     " Cows Saved 🐮 :   " + this.cowHerd.length + " Final Score 🏅 :   " + this.finalScore,
-        //   CANVAS_WIDTH / 2 - 300,
-        //   CANVAS_HEIGHT / 2 - 100,
-        //   750,
-        //   200
-        // );
-        // text("Final Score: " + this.finalScore, CANVAS_WIDTH / 2 - 300, CANVAS_HEIGHT / 2 + 200, 600, 100)
+        text(
+          "                           WELL DONE!!! YOU WIN!!!             YOU DEFENDED YOUR PROPERTAH!!! " +
+            " UFOs Destroyed 🛸 :     " +
+            this.UFOcounter +
+            "                                         Cows Saved 🐮 :             " +
+            this.cowHerd.length +
+            "                                         Final Score 🏅 :                " +
+            this.finalScore,
+          CANVAS_WIDTH / 2 - 300,
+          CANVAS_HEIGHT / 2 - 100,
+          700,
+          200
+        );
       }
     } else {
       text(score, CANVAS_WIDTH - 200, 50, 50, 50);
