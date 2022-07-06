@@ -64,7 +64,7 @@ class Game {
     // in order for UFOs to appear one by one each second:
     if (frameCount % 60 === 0 && this.ufoHerd.length < this.numberOfUFOs) {
       const randomX = Math.floor(Math.random() * (CANVAS_WIDTH - 150));
-      this.ufoHerd.push(new Ufo(randomX, 0 - 100, frameCount / 60));
+      this.ufoHerd.push(new Ufo(randomX, 0 - 100, frameCount / 60)); // framecount / 60 = current second when created = UFO ID
       this.UFOcounter++; // <- in order to keep track of score
     }
 
@@ -130,9 +130,12 @@ class Game {
     //display score:
     this.scoreDraw();
 
+    // In order to avoid memory leak, we redeclare gameOverCounter when it reaches a long negative number.
     if (this.gameOverCounter < -1200) {
       this.gameOverCounter = 1;
     }
+
+    this.readyUp();
   }
 
   // break glass in case of machine gun powerup
@@ -202,9 +205,9 @@ class Game {
 
   scoreDraw() {
     let score = this.player.score * 100;
-    if ((this.ufoHerd <= 0 || this, this.cowHerd.length <= 0)) {
+    if (this.ufoHerd.length <= 0 || this.cowHerd.length <= 0) {
       this.gameOverCounter--;
-      if (this.ufoHerd <= 0 && this.gameOverCounter <= 0) {
+      if (this.ufoHerd.length <= 0 && this.gameOverCounter <= 0) {
         text(this.finalScore, CANVAS_WIDTH - 200, 50, 50, 50);
         textFont("Orbitron");
         text(
@@ -223,7 +226,9 @@ class Game {
       }
       if (this.cowHerd.length <= 0 && this.gameOverCounter <= 0) {
         text(
-          "GAME OVER!!!                                                  ALL YOUR COWS ARE BELONG TO US!!!",
+          "GAME OVER!!!                                                  ALL YOUR COWS ARE BELONG TO US!!!      " +
+            "UFOs Destroyed 🛸 :" +
+            this.UFOcounter,
           CANVAS_WIDTH / 2 - 300,
           CANVAS_HEIGHT / 2,
           700,
@@ -236,6 +241,27 @@ class Game {
     } else {
       text(score, CANVAS_WIDTH - 200, 50, 50, 50);
       textFont("Orbitron");
+    }
+  }
+
+  readyUp() {
+    if (frameCount > 180 && frameCount < 420) {
+      text(
+        "LOADING GUN...",
+        CANVAS_WIDTH / 2 - 300,
+        CANVAS_HEIGHT / 2,
+        700,
+        200
+      );
+    }
+    if (frameCount > 460 && frameCount < 520) {
+      text(
+        "COMMENCE FIRE!!!",
+        CANVAS_WIDTH / 2 - 300,
+        CANVAS_HEIGHT / 2,
+        700,
+        200
+      );
     }
   }
 }
