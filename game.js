@@ -43,6 +43,9 @@ class Game {
       "sounds/Komiku_-_07_-_Last_Boss__Lets_see_what_we_got.mp3"
     );
     ufoExplosionSound = loadSound("sounds/musket-explosion-6383.mp3");
+    // ufoTractorBeam = loadSound(
+    //   "sounds/alien-abduction-by-prettysleepy-art-10732.mp3"
+    // );
   }
 
   play() {

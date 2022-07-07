@@ -18,3 +18,4 @@ let abductingHalo;
 let gunShotSound;
 let backGroundMusic;
 let ufoExplosionSound;
+let ufoTractorBeam;
