@@ -141,7 +141,7 @@ class Game {
       this.gameOverCounter = 1;
     }
 
-    if (this.gameOverCounter === 0) {
+    if (this.gameOverCounter <= 0 && this.gameOverCounter >= -10) {
       this.localScorage();
     }
 
@@ -244,6 +244,7 @@ class Game {
       }
       if (this.cowHerd.length <= 0 && this.gameOverCounter <= 0) {
         // this.localScorage(); Current score implementation makes localScorage pointless here since 0 cows * score = 0 always.
+        // push();
         text(
           "GAME OVER!!!                                                  ALL YOUR COWS ARE BELONG TO US!!!      " +
             "UFOs Destroyed 🛸 :" +
@@ -253,7 +254,6 @@ class Game {
           700,
           200
         );
-        // push();
         // fill("red");
         // pop();
       }
@@ -286,23 +286,29 @@ class Game {
   }
 
   localScorageInit() {
-    // console.log("Im in");
-    if (localStorageSurvey === undefined || localStorageSurvey === null) {
-      // console.log("Im inside");
+    let localStorageInitSurvey = localStorage.getItem("highestScore");
+    console.log("Im in");
+    if (
+      localStorageInitSurvey === undefined ||
+      localStorageInitSurvey === null
+    ) {
+      console.log("Im inside");
       localStorage.setItem("highestScore", 0);
     }
   }
 
   localScorage() {
-    // console.log("processing is processing");
+    let localStorageSurvey = localStorage.getItem("highestScore");
+    console.log("processing is processing");
     // if (/* localStorageSurvey === undefined || */ localStorageSurvey === null) {
     //   console.log("I shouldnt be here now");
     //   localStorage.setItem("highestScore", 0);
     // }
     if (localStorageSurvey !== null && typeof localStorageSurvey === "string") {
+      console.log("parsing");
       currentHighScore = JSON.parse(localStorageSurvey);
       if (this.finalScore > currentHighScore) {
-        // console.log("updating highScore");
+        console.log("updating highScore");
         localStorage.setItem("highestScore", this.finalScore);
       }
     }

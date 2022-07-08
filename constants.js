@@ -20,4 +20,4 @@ let backGroundMusic;
 let ufoExplosionSound;
 let ufoTractorBeam;
 let currentHighScore;
-let localStorageSurvey = localStorage.getItem("highestScore");
+
