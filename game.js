@@ -114,6 +114,9 @@ class Game {
       return !cow.stowedOnUFO;
     });
 
+    // Hint player that he is not allowed to shoot during initial UFO deployment (until frameCount > 480)
+    this.readyUp();
+
     //call abductioEvent() in some random (but somewhat limited) way that still makes sense for the gameplay:
     const abductioDice = Math.floor(Math.random() * 10);
     if (frameCount > 540 && frameCount % 120 === 0 && abductioDice >= 4) {
@@ -138,14 +141,17 @@ class Game {
       this.gameOverCounter = 1;
     }
 
-    this.readyUp();
-
     if (this.gameOverCounter === 0) {
       this.localScorage();
     }
 
     if (this.gameOverCounter < -240) {
-      
+      // this.endGame()
+    }
+
+    //To avoid both "You Win" and "You Lose" conditions to be met at the same time, don't let the player shoot after all cows have been abducted.
+    if (this.cowHerd.length <= 0) {
+      this.player.allowedBurst = 0;
     }
   }
 
@@ -268,6 +274,7 @@ class Game {
       );
     }
     if (frameCount > 480 && frameCount < 520) {
+      this.localScorageInit();
       text(
         "COMMENCE FIRE!!!",
         CANVAS_WIDTH / 2 - 300,
@@ -278,14 +285,24 @@ class Game {
     }
   }
 
-  localScorage() {
-    let localStorageSurvey = localStorage.getItem("highestScore");
+  localScorageInit() {
+    // console.log("Im in");
     if (localStorageSurvey === undefined || localStorageSurvey === null) {
+      // console.log("Im inside");
       localStorage.setItem("highestScore", 0);
     }
+  }
+
+  localScorage() {
+    // console.log("processing is processing");
+    // if (/* localStorageSurvey === undefined || */ localStorageSurvey === null) {
+    //   console.log("I shouldnt be here now");
+    //   localStorage.setItem("highestScore", 0);
+    // }
     if (localStorageSurvey !== null && typeof localStorageSurvey === "string") {
       currentHighScore = JSON.parse(localStorageSurvey);
       if (this.finalScore > currentHighScore) {
+        // console.log("updating highScore");
         localStorage.setItem("highestScore", this.finalScore);
       }
     }
