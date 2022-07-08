@@ -18,6 +18,6 @@ class Bullet {
   hit() {
     this.hasCollided = true;
     ufoExplosionSound.play();
-    ufoExplosionSound.setVolume(0.5);
+    ufoExplosionSound.setVolume(0.3);
   }
 }

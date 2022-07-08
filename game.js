@@ -139,6 +139,14 @@ class Game {
     }
 
     this.readyUp();
+
+    if (this.gameOverCounter === 0) {
+      this.localScorage();
+    }
+
+    if (this.gameOverCounter < -240) {
+      
+    }
   }
 
   // break glass in case of machine gun powerup
@@ -211,6 +219,7 @@ class Game {
     if (this.ufoHerd.length <= 0 || this.cowHerd.length <= 0) {
       this.gameOverCounter--;
       if (this.ufoHerd.length <= 0 && this.gameOverCounter <= 0) {
+        // this.localScorage(); localScorage here works but it's called 60 times a second
         text(this.finalScore, CANVAS_WIDTH - 200, 50, 50, 50);
         textFont("Orbitron");
         text(
@@ -228,6 +237,7 @@ class Game {
         );
       }
       if (this.cowHerd.length <= 0 && this.gameOverCounter <= 0) {
+        // this.localScorage(); Current score implementation makes localScorage pointless here since 0 cows * score = 0 always.
         text(
           "GAME OVER!!!                                                  ALL YOUR COWS ARE BELONG TO US!!!      " +
             "UFOs Destroyed 🛸 :" +
@@ -257,7 +267,7 @@ class Game {
         200
       );
     }
-    if (frameCount > 460 && frameCount < 520) {
+    if (frameCount > 480 && frameCount < 520) {
       text(
         "COMMENCE FIRE!!!",
         CANVAS_WIDTH / 2 - 300,
@@ -267,4 +277,25 @@ class Game {
       );
     }
   }
+
+  localScorage() {
+    let localStorageSurvey = localStorage.getItem("highestScore");
+    if (localStorageSurvey === undefined || localStorageSurvey === null) {
+      localStorage.setItem("highestScore", 0);
+    }
+    if (localStorageSurvey !== null && typeof localStorageSurvey === "string") {
+      currentHighScore = JSON.parse(localStorageSurvey);
+      if (this.finalScore > currentHighScore) {
+        localStorage.setItem("highestScore", this.finalScore);
+      }
+    }
+  }
+
+  endGame() {
+    // location.reload()
+  }
 }
+
+// setTimeout(function() {
+// location.reload()
+// }, 4000)

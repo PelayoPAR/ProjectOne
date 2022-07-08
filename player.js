@@ -26,7 +26,7 @@ class Player {
 
   bulletBurst() {
     const gunLocation = this.farmerGunLocation();
-    // limit ROF to x bullets on screen(allowedBurst):
+    // limit ROF to x bullets on screen(allowedBurst) - frameCount-480 fps until player can shoot so that UFOs don't get destroyed while in initial phase
     if (this.bulletArray.length < this.allowedBurst && frameCount > 480) {
       this.bulletArray.push(
         new Bullet(
