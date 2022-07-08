@@ -249,7 +249,7 @@ class Game {
         // push();
         text(
           "GAME OVER!!!                                                  ALL YOUR COWS ARE BELONG TO US!!!      " +
-            "UFOs Destroyed 🛸 :" +
+            " 🛸 UFOs Destroyed :" +
             this.UFOcounter,
           CANVAS_WIDTH / 2 - 300,
           CANVAS_HEIGHT / 2,
@@ -289,28 +289,22 @@ class Game {
 
   localScorageInit() {
     let localStorageInitSurvey = localStorage.getItem("highestScore");
-    console.log("Im in");
     if (
       localStorageInitSurvey === undefined ||
       localStorageInitSurvey === null
     ) {
-      console.log("Im inside");
       localStorage.setItem("highestScore", 0);
     }
   }
 
   localScorage() {
     let localStorageSurvey = localStorage.getItem("highestScore");
-    console.log("processing is processing");
     // if (/* localStorageSurvey === undefined || */ localStorageSurvey === null) {
-    //   console.log("I shouldnt be here now");
     //   localStorage.setItem("highestScore", 0);
     // }
     if (localStorageSurvey !== null && typeof localStorageSurvey === "string") {
-      console.log("parsing");
       currentHighScore = JSON.parse(localStorageSurvey);
       if (this.finalScore > currentHighScore) {
-        console.log("updating highScore");
         localStorage.setItem("highestScore", this.finalScore);
       }
     }
