@@ -145,8 +145,8 @@ class Game {
       this.localScorage();
     }
 
-    if (this.gameOverCounter < -240) {
-      // this.endGame()
+    if (this.gameOverCounter < -600) {
+      this.endGame();
     }
 
     //To avoid both "You Win" and "You Lose" conditions to be met at the same time, don't let the player shoot after all cows have been abducted.
@@ -230,16 +230,18 @@ class Game {
         textFont("Orbitron");
         text(
           "                           WELL DONE!!! YOU WIN!!!             YOU DEFENDED YOUR PROPERTAH!!! " +
-            " UFOs Destroyed 🛸 :     " +
+            " 🛸 UFOs Destroyed :     " +
             this.UFOcounter +
-            "                                         Cows Saved 🐮 :             " +
+            "                                         🐮 Cows Saved :             " +
             this.cowHerd.length +
-            "                                         Final Score 🏅 :                " +
-            this.finalScore,
+            "                                         🏅 Final Score :                " +
+            this.finalScore +
+            "                                         🥇 High Score :       " +
+            localStorage.getItem("highestScore"),
           CANVAS_WIDTH / 2 - 300,
           CANVAS_HEIGHT / 2 - 100,
           700,
-          200
+          300
         );
       }
       if (this.cowHerd.length <= 0 && this.gameOverCounter <= 0) {
@@ -252,7 +254,7 @@ class Game {
           CANVAS_WIDTH / 2 - 300,
           CANVAS_HEIGHT / 2,
           700,
-          200
+          300
         );
         // fill("red");
         // pop();
@@ -315,7 +317,7 @@ class Game {
   }
 
   endGame() {
-    // location.reload()
+    location.reload();
   }
 }
 
